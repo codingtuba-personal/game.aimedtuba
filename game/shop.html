@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        .description-price-type{
+            color:gray;
+        }
+        button{
+            width:49vw;
+            height:49vw;
+            max-width:33vh;
+            max-height:33vh;
+            border:2.5px solid black;
+            background-color:transparent;
+            margin-left:5px;
+            margin-top:5px;
+            cursor:pointer;
+        }
+        .search{
+            margin:0 auto;
+            width:85%;
+            border:2.5px solid black;
+            background-color:transparent;
+            height:25px;
+            font-size: 15px;
+            outline:none;
+        }
+        .texture-show{
+            margin: 0 auto;
+            width:49vw;
+            max-width:33vh;
+            height:15vh;
+            border:none;
+            overflow:hidden ;
+        }
+        .has{border:2.5px solid lime;}
+        .selected{border:2.5px solid blue;}
+        .search::placeholder{color:black;}
+        .product{text-align:center;}
+    </style>
+</head>
+<body>
+    <input type="text" class="search" placeholder="Search... "> score: <a class="score"></a>; gems 💎: <a class="gems"></a><a href="/" class="back"> 🔙</a><br>
+    <div class="products">
+
+    </div>
+    <script>
+        let decoded=new URLSearchParams(location.search)
+        document.querySelector(".search").value=new URLSearchParams(location.search).get("s");
+        document.querySelector(".search").focus();
+        document.querySelector(".search").onkeyup=e=>{
+            if(e.key=="Enter"||document.querySelector(".search").value==""){
+                location.replace("/s/s?s="+document.querySelector(".search").value)
+            }
+        }
+        console.log(getCookie('texture'))
+        console.log(getCookie('color'))
+        if(!getCookie('gems')){setCookie('gems',0,99999)}
+        if(!getCookie('score')){setCookie('score',0,10)}
+        if(!localStorage.getItem('packs')){localStorage.setItem('packs',"")}
+        document.querySelector('a.score').innerHTML=getCookie('score');
+        document.querySelector('a.gems').innerHTML=getCookie('gems');
+        var xhr=new XMLHttpRequest();
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4 && xhr.status==200){
+                data=JSON.parse(xhr.responseText);
+                var products=document.querySelector(".products");
+                for(var i=0;i<data.length;i++){
+                    if(data[i].name.includes(new URLSearchParams(location.search).get('s'))){
+                        var product=document.createElement("button");
+                        product.classList.add("product");
+                        let computed_price="";
+                        let computed_main=null;
+                        data[i].price.forEach((i,d)=>{
+                            computed_price+="🧮"+i[0]+" 💎"+i[1]+", "
+                        })
+                        if(data[i].type=="texture"){
+                            computed_main=`
+                                <iframe src='/see?c=1î2ú3ū4ï5%C3%AD6į7ì8ž9œ!ø&colors=${JSON.stringify(data[i].color).replaceAll("#","")}&images=${JSON.stringify(data[i].texture)}' class="texture-show"></iframe>
+                            `
+                            let found=false;
+                            localStorage.getItem("packs").split(",").forEach((d)=>{
+                                if(parseInt(d)===i){
+                                    found=true;
+                                }
+                            })
+                            if(found==true&&decoded.get("s")==""){
+                                product.setAttribute("data-_tuba",i)
+                                product.setAttribute("data-tuba_",JSON.stringify(data[i]))
+                                product.classList.add("has")
+                                product.onclick=function(){
+                                    let data=JSON.parse(this.getAttribute("data-tuba_"));
+                                    let id=JSON.parse(this.getAttribute("data-_tuba"));
+                                    localStorage.setItem('selected',parseInt(this.getAttribute("data-_tuba")));
+                                    setCookie('texture',JSON.stringify(data.texture),99999);
+                                    setCookie('color',JSON.stringify(data.color),99999);
+                                    localStorage.setItem('selected',id)
+                                    location.reload()
+                                }
+                            }else if(found==false){
+                                product.setAttribute("data-tuba_",JSON.stringify(data[i]))
+                                product.setAttribute("data-_tuba",i)
+                                product.onclick=function(){
+                                    let data=JSON.parse(this.getAttribute("data-tuba_"));
+                                    console.log(this.getAttribute("data-_tuba"))
+                                    let id=parseInt(this.getAttribute("data-_tuba"));
+                                    let cheapest=null
+                                    data.price.forEach(i=>{
+                                        if(getCookie('gems')>=i[1]&&getCookie('score')>=i[0]){
+                                            if(cheapest!=null){
+                                                if(cheapest[1]>i[1]){
+                                                    cheapest=i;
+                                                }else if(cheapest[1]==i[1]){
+                                                    if(cheapest[0]>i[0]){
+                                                        cheapest=i;
+                                                    }
+                                                }
+                                            }else{cheapest=i;}
+                                        }
+                                    })
+                                    if(cheapest!=null){
+                                        setCookie('gems',getCookie('gems')-cheapest[1],99999);
+                                        setCookie('score',getCookie('score')-cheapest[0],99999);
+                                        setCookie('texture',JSON.stringify(data.texture),99999);
+                                        setCookie('color',JSON.stringify(data.color),99999);
+                                        localStorage.setItem('packs',localStorage.getItem('packs')+id+",");
+                                        localStorage.setItem('selected',id)
+                                        location.reload()
+                                    }else{
+                                        alert("You don't have enough gems 💎 or score 🧮 to buy this item!")
+                                    }
+                                }
+                            }
+                        }else{
+                            computed_main=`<div style=font-size:40px>${data[i].emoji}</div>`;
+                            product.setAttribute("data-tuba_",JSON.stringify(data[i]))
+                            product.onclick=function(){
+                                let data=JSON.parse(this.getAttribute("data-tuba_"));
+                                let cheapest=null
+                                data.price.forEach(i=>{
+                                    if(getCookie('gems')>=i[1]&&getCookie('score')>=i[0]){
+                                        if(cheapest!=null){
+                                            if(cheapest[1]>i[1]){
+                                                cheapest=i;
+                                            }else if(cheapest[1]==i[1]){
+                                                if(cheapest[0]>i[0]){
+                                                    cheapest=i;
+                                                }
+                                            }
+                                        }else{cheapest=i;}
+                                    }
+                                })
+                                if(cheapest!=null){
+                                    setCookie('gems',getCookie('gems')-cheapest[1],99999);
+                                    setCookie('score',getCookie('score')-cheapest[0],99999);
+                                    if(!getCookie(data.name)||isNaN(getCookie(data.name))){setCookie(data.name,0,99999);}
+                                    setCookie(data.name,parseInt(getCookie(data.name))+data.number,99999);
+                                    location.reload()
+                                }else{
+                                    alert("You don't have enough gems 💎 or score 🧮 to buy this item!")
+                                }
+                            }
+                        }
+                        product.innerHTML=`
+                            ${computed_main}
+                            <h3>${data[i].name} <a class="description-price-type">(${data[i].type})</a></h3>
+                            <p class="description-price-type">${data[i].description}; ${computed_price}</p>
+                        `;
+                        products.appendChild(product);
+                    }
+                }
+            if(localStorage.getItem("selected")&&decoded.get("s")==""){document.querySelectorAll(".product")[parseInt(localStorage.getItem("selected"))].className="product selected";}
+            }
+        }
+        xhr.open("GET","/s/json",true);
+        xhr.send();
+        function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}
+    </script>
+</body>
+</html>

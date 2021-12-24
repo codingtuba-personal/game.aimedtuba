@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        body{text-align:center}
+        .button{
+            width:5vw;
+            height:5vw;
+            min-width:32px;
+            max-height: 7vh;
+            max-width: 7vh;
+            background-color: aqua;
+            border:none;
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform:rotateY(180deg);
+            outline: none;
+            border: 1px black dotted
+        }
+        .container-row{
+            width:50vw;
+            min-width: 320px;
+            height:calc(5vw - 0px);
+            max-width: 70vh;
+            max-height: 7vh;
+        }
+        .master-container{
+            border:2.5px solid black;
+            width:50vw;
+            min-width: 320px;
+            height:fit-content;
+            max-width: 70vh;
+            background-color: aqua;
+            margin: 0 auto;
+        }
+        .button-container{
+            margin: 0 auto;
+        }
+        .time{
+            color:black;
+            font-family: 'Roboto', sans-serif;
+            font-size:2.5vh;
+        }
+        .key{
+            width:7vw;
+            height:7vw;
+            max-height: 9vh;
+            max-width: 9vh;
+            background-color: transparent;
+            border:2.5px solid black;
+            outline: none;
+            text-align:center;
+        }
+        .edit-option, .play{
+            width:7vw;
+            height:7vw;
+            max-height: 9vh;
+            max-width: 9vh;
+            border:2.5px solid black;
+            background-size:cover;
+            background-repeat: no-repeat;
+            outline:none
+        }
+        .edit-option:focus, .play:focus{
+            border:4px solid blue;
+        }
+        .play{
+            font-size:1.5vw;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="play" style='background-color: transparent' onclick="location.replace('/p?c='+encode())">▶️</button>
+        <button class="play" style='background-color: transparent' onclick="location='/edit'">🗑</button>
+        <button class="play" style='background-color: transparent' onclick="send()">🙋</button>
+        <button class="play" style='background-color: transparent' onclick="home()">🏠</button><br><br>
+    </div>
+    <br>
+    <div class="master-container">
+        <div class="container-row top"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row bottom"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+    </div>
+    <script>
+        const n = null
+        let colors=['aqua','#7CFC00','#7B3F00','#7CFC00','#228B22','pink','purple','#7CFC00','#7CFC00','#7CFC00','#7CFC00']
+        let images=['none','none','none','url(https://i.ibb.co/JRq8SRY/person-removebg-preview-1.png)','none','none','none','url("https://securitystbk.com/wp-content/uploads/2018/11/Padlock-PNG-Transparent-Image.png")','url("https://upload.wikimedia.org/wikipedia/commons/5/58/Key_Vector_Graphic.svg")','url("https://i.imgur.com/SYEdzBD.png")','url("https://i.ibb.co/DLWd56V/image-removebg-preview-1.png")']
+        let selected_block_id=0
+        let blocks=[]
+        if(getCookie("texture")){images=JSON.parse(getCookie("texture"))}
+        if(getCookie("color")){colors=JSON.parse(getCookie("color"))}
+        document.querySelectorAll(".button").forEach(e=>{e.style.backgroundColor=colors[0]})
+        document.querySelectorAll(".button").forEach(e=>{e.style.backgroundImage=images[0]})
+        document.querySelector(".master-container").style.backgroundColor=colors[0]
+        for(i of Array(100).keys()){
+            blocks.push(0)
+        }
+        var mouseDown = false;
+        document.body.onmousedown = function() { 
+        mouseDown=true;
+        }
+        document.body.onmouseup = function() {
+        mouseDown=false;
+        }
+        document.querySelectorAll('.button').forEach(function(e,i){
+            e.onmouseover = function () {
+                if(mouseDown==true) set_block(i,selected_block_id)
+            }
+            e.onclick = function(){
+                set_block(i,selected_block_id)
+            }
+        })
+        function send(){
+            var xhr = new window.XMLHttpRequest()
+            xhr.open('POST', '/e', true)
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            xhr.send(JSON.stringify({code:encode()}))
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200 || this.status == 302) {
+                    alert(this.responseText)
+                }
+            };
+        }
+        function set_block(block,block_id){
+            blocks[block]=block_id
+            document.getElementsByClassName('button')[block].style.backgroundColor=colors[block_id]
+            document.getElementsByClassName('button')[block].style.backgroundImage=images[block_id]
+        }
+        function encode(){
+            let encoded=''
+            let encode_characters=["1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "ć", "$", "ź", "^", "ż", "*", "(", ")", "-", "_", "=", "+", "|", "]", "}", "[", "{", "'", "\\", ";", ":", "č", "ç", ".", ">", ",", "<", "m", "n", "b", "v", "c", "x", "z", "l", "k", "j", "h", "g", "f", "d", "a", "s", "p", "o", "i", "u", "y", "t", "r", "e", "w", "q", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "è", "é", "ê", "ë", "ē", "ė", "ę", "ÿ", "û", "ü"]
+            let encode_codes=["ù","ú","ū",'î','ï','í','į','ì','ž','œ','ø']
+            blocks.forEach(function(item,index){
+                if(item!=0){
+                    encoded+=encode_characters[index]+encode_codes[item]
+                }
+            })
+            return encoded
+        }
+        function decode(code){
+            let decode_characters=["1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "ć", "$", "ź", "^", "ż", "*", "(", ")", "-", "_", "=", "+", "|", "]", "}", "[", "{", "'", "\\", ";", ":", "č", "ç", ".", ">", ",", "<", "m", "n", "b", "v", "c", "x", "z", "l", "k", "j", "h", "g", "f", "d", "a", "s", "p", "o", "i", "u", "y", "t", "r", "e", "w", "q", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "è", "é", "ê", "ë", "ē", "ė", "ę", "ÿ", "û", "ü"]
+            let decode_codes=["ù","ú","ū",'î','ï','í','į','ì','ž','œ','ø']
+            decode_characters.forEach(function(character,index){
+                if(code.split(character).length==2){
+                    let decode_block_id=code.split(character)[1].split('')[0];
+                    console.log(decode_block_id)
+                    decode_codes.forEach(function(character_code,index_code){
+                        if(character_code==decode_block_id){
+                            set_block(index,index_code)
+                        }
+                    })
+                }
+            })
+        }
+        if(location.search.includes('?c=')){decode(decodeURI(location.search.replace('?c=','')))}
+        colors.forEach(function(item,index){
+            document.getElementsByClassName('button-container')[0].innerHTML+=`
+                <button class='edit-option' style='background-color:${item};background-image:${images[index]}'></button>
+            `
+        })
+        document.querySelectorAll('.edit-option').forEach(function(e,i){
+            e.onclick= function(){
+                selected_block_id=i
+            }
+        })
+        function home(){
+            let x=decodeURI(getCookie("edit")).split("ł")
+            x[parseInt(getCookie("editing"))]=encode().replaceAll("\\","\\\\")
+            let s=""
+            x.forEach(function(item,index){s+=(item+(index!=x.length-1?"ł":"")).replaceAll(";","°").replaceAll("\\","•")})
+            setCookie("edit",encodeURI(s),99999)
+            location.replace("/e")
+        }
+        function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}
+    </script>
+</body>
+</html>

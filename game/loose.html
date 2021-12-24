@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        .contain{
+            background-color: red;
+            display: flex;
+            align-items: center;
+            height:100vh;
+            animation: hidden-color 10s;
+        }
+        .loose{
+            background-color:orange;
+            width:90vw;
+            max-width: 700px;
+            left: 50%;
+            top: 50%;
+            margin: 0 auto;
+            animation: open-up 10s;
+            height:95vh;
+            vertical-align: middle;
+            overflow-y: hidden;
+            overflow: hidden;
+            text-align: center;
+        }
+        .image-1{
+            background-size: cover;
+            background-repeat: no-repeat;
+            width:90vw;
+            max-width: 700px;
+            margin-top: 50%;
+            transform: translateY(-50%);
+            animation: image-1 10s;
+            opacity:0;
+        }
+        .image-2{
+            background-size: cover;
+            background-repeat: no-repeat;
+            width:90vw;
+            max-width: 700px;
+            margin-top: 50%;
+            transform: translateY(-50%);
+            animation: image-2 10s;
+            opacity:0;
+        }
+        .button{
+            border: 2.5px solid red;
+            background-color: transparent;
+            color: red;
+            height:30px;
+            width:50vw;
+            max-width:350px;
+            margin-top: 10px;
+            animation: button 10s;
+        }
+        @keyframes open-up {
+            0%{
+                height:0px;
+                background-color:aquamarine;
+            }
+            25%{
+                height:90vh;
+                background-color:aquamarine;
+            }
+            30%{
+                height:95vh;
+                background-color:aquamarine;
+            }
+            70%{background-color:aquamarine;}
+            71%{background-color:orange;}
+        }
+        @keyframes hidden-color {
+            0%{background-color: aqua;}
+            30%{background-color: aqua;}
+            70%{background-color: aqua;}
+            71%{background-color: red;}
+        }
+        @keyframes image-1 {
+            10%{opacity: 0;}
+            29%{opacity:1}
+            30%{opacity:1}
+            70%{opacity:1;height:auto;margin-top: 50%;}
+            71%{opacity: 0;height:0px;margin-top:0px;}
+            100%{opacity: 0;height:0px;margin-top:0px;}
+        }
+        @keyframes image-2 {
+            70%{opacity:0}
+            71%{opacity:1}
+            100%{opacity:1}
+        }
+        @keyframes button {
+            1%{opacity:0}
+            100%{opacity:0}
+        }
+    </style>
+</head>
+<body class='contain'>
+        <div class="loose">
+            <button class='button' onclick='location="/"'>become a non-loser</button>
+            <img src="https://s6.gifyu.com/images/imageedit_2_8775299888.gif" alt="congrats" class='image-1'>
+            <img src="https://i.giphy.com/media/Ix5Pk3cUofTLW/giphy.webp" alt="loser" class="image-2">
+        </div>
+    <script>let points=parseInt(location.search.replace('?p=',''));setCookie("score",parseInt(getCookie("score"))+points,99999);function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        body{text-align:center}
+        .button{
+            width:5vw;
+            height:5vw;
+            max-height: 9vh;
+            max-width: 9vh;
+            min-width:32px;
+            background-color: aqua;
+            min-height:32px;
+            border:none;
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform:rotateY(180deg);
+            outline: none;
+        }
+        .container-row{
+            width:50vw;
+            height:calc(5vw + 0px);
+            min-width:320px;
+            max-width: 90vh;
+            min-height:32px;
+            max-height: 9vh;
+        }
+        .master-container{
+            border:2.5px solid black;
+            width:50vw;
+            max-width: 90vh;
+            min-height:32px;
+            min-width:320px;
+            background-color: aqua;
+            margin: 0 auto;
+        }
+        .button-container{
+            margin: 0 auto;
+            display: none;
+        }
+        .time{
+            color:black;
+            font-family: 'Roboto', sans-serif;
+            font-size:2.5vh;
+        }
+        .key{
+            width:7vw;
+            height:7vw;
+            max-height: 9vh;
+            max-width: 9vh;
+            background-color: transparent;
+            border:2.5px solid black;
+            outline: none;
+            text-align:center;
+        }
+        .retry:hover,.share:hover {
+            cursor: pointer;
+        }
+        .green-color{
+            color:lime;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="key left">←</button>
+        <button class="key right">→</button>
+        <button class="key up">↑</button>
+        <button class="key down">↓</button>
+    </div>
+    <br>
+    <div class="master-container">
+        <div class="container-row top"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row bottom"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+    </div>
+    <p class="time">the brown block will fall once you get off. | <a onclick="location=''" class='retry'>retry</a></p>
+    <script>
+        const n = null
+        let colors=['aqua','#7CFC00','#7B3F00','#7CFC00','#228B22','pink','purple','#7CFC00','#7CFC00','#7CFC00','#7CFC00']
+        let images=['none','none','none','url(https://i.ibb.co/JRq8SRY/person-removebg-preview-1.png)','none','none','none','url("https://securitystbk.com/wp-content/uploads/2018/11/Padlock-PNG-Transparent-Image.png")','url("https://upload.wikimedia.org/wikipedia/commons/5/58/Key_Vector_Graphic.svg")','url("https://freepikpsd.com/media/2019/10/crack-line-png-Transparent-Images.png")','url("https://i.ibb.co/DLWd56V/image-removebg-preview-1.png")']
+        let player_location=1
+        let blocks=[]
+        let player_direction='none'
+        let current_level=0
+        let keys=0
+        if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+            || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) { 
+            document.getElementsByClassName('button-container')[0].style.display = "block";
+        }
+        if(getOS()=="iOS"||getOS()=="Android"){
+            document.getElementsByClassName('button-container')[0].style.display = "block";
+        }
+        function getOS() {
+                var userAgent = window.navigator.userAgent,
+                    platform = window.navigator.platform,
+                    macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                    windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                    iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+                    os = null;
+
+                if (iosPlatforms.indexOf(platform) !== -1 ||  window.navigator.platform=='MacIntel') {
+                    os = 'iOS';
+                } else if (/Android/.test(userAgent)) {
+                    os = 'Android';
+                }
+
+                return os;
+        }
+
+        for(i of Array(100).keys()){
+            blocks.push(0)
+        }
+        document.getElementsByClassName('left')[0].onclick = function(){left()}
+        document.getElementsByClassName('right')[0].onclick = function(){right()}
+        document.getElementsByClassName('up')[0].onclick = function(){up()}
+        document.getElementsByClassName('down')[0].onclick = function(){down()}
+        document.onkeydown=function(k){
+            let movement=null
+            if(k.keyCode==37){left();movement=right}
+            if(k.keyCode==38){up();movement=down}
+            if(k.keyCode==39){right();movement=left}
+            if(k.keyCode==40){down();movement=up}
+
+        }
+        function check_blocks(){
+            if(blocks[player_location]==4){location.replace('5')}
+            if(blocks[player_location]==5){
+                let last=null
+                console.log('a')
+                blocks.forEach(function(block_id,block_location){
+                    if(block_id==6){
+                        last=block_location
+                    }
+                })
+                if(last!=null){
+                    player_location=last
+                    set_player()
+                }
+            }
+            if(blocks[player_location]==8){
+                keys++
+                set_block(player_location,1)
+                set_player()
+            }
+            if(blocks[player_location]==7){
+                if(keys>0){
+                    keys--
+                    set_block(player_location,1)
+                    set_player()
+                }else{movement()}
+            }
+            if(blocks[player_location]==10){
+                location=''
+            }
+
+        }
+        function swap_blocks(){
+            blocks.forEach(function(block,block_location){
+                    if(block==10){set_block(block_location,9)}
+                    if(block==9){set_block(block_location,10)}
+                    set_player()
+            })
+        }
+        function left(){let worked=false
+            if(!player_location.toString().includes('0')){
+                document.getElementsByClassName('button')[player_location].style.backgroundColor=colors[blocks[player_location]]
+                document.getElementsByClassName('button')[player_location].style.backgroundImage=images[blocks[player_location]]
+                if(blocks[player_location-1]!=0&&(blocks[player_location-1]!=7||keys!=0)){if(blocks[player_location]==2){set_block(player_location,0)}player_location--;worked=true}
+                set_player()
+                player_direction='none'
+                document.getElementsByClassName('button')[player_location].style.transform=player_direction
+            }
+            if(worked==true){swap_blocks()}
+            check_blocks()
+        }
+        function right(){let worked=false
+            if((!player_location.toString().includes('9'))||(player_location>88&&player_location!=99)){document.getElementsByClassName('button')[player_location].style.backgroundColor=colors[blocks[player_location]]
+            document.getElementsByClassName('button')[player_location].style.backgroundImage=images[blocks[player_location]]
+            if(blocks[player_location+1]!=0&&(blocks[player_location+1]!=7||keys!=0)){if(blocks[player_location]==2){set_block(player_location,0)}player_location++;worked=true}
+            set_player()
+            player_direction='rotateY(-180)'
+            document.getElementsByClassName('button')[player_location].style.transform=player_direction}
+            if(worked==true){swap_blocks()}
+            check_blocks()
+        }
+        function down(){let worked=false
+            document.getElementsByClassName('button')[player_location].style.backgroundColor=colors[blocks[player_location]]
+            document.getElementsByClassName('button')[player_location].style.backgroundImage=images[blocks[player_location]]
+            if(blocks[player_location+10]&&(blocks[player_location+10]!=7||keys!=0)){if(blocks[player_location+10]!=0){if(blocks[player_location]==2){set_block(player_location,0)}player_location+=10;worked=true}}
+            set_player()
+            if(worked==true){swap_blocks()}
+            check_blocks()
+        }
+        function up(){let worked=false
+            document.getElementsByClassName('button')[player_location].style.backgroundColor=colors[blocks[player_location]]
+            document.getElementsByClassName('button')[player_location].style.backgroundImage=images[blocks[player_location]]
+            if(blocks[player_location-10]&&(blocks[player_location-10]!=7||keys!=0)){if(blocks[player_location-10]!=0){if(blocks[player_location]==2){set_block(player_location,0)}player_location-=10;worked=true}}
+            set_player()      
+            if(worked==true){swap_blocks()}
+            check_blocks()
+        }
+        function set_player(){
+            document.getElementsByClassName('button')[player_location].style.backgroundImage=images[3]
+        }
+        function set_block(block,block_id){
+            blocks[block]=block_id
+            document.getElementsByClassName('button')[block].style.backgroundColor=colors[block_id]
+            document.getElementsByClassName('button')[block].style.backgroundImage=images[block_id]
+        }
+        function decode(code){
+            let decode_characters=["1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "ć", "$", "ź", "^", "ż", "*", "(", ")", "-", "_", "=", "+", "|", "]", "}", "[", "{", "'", "\\", ";", ":", "č", "ç", ".", ">", ",", "<", "m", "n", "b", "v", "c", "x", "z", "l", "k", "j", "h", "g", "f", "d", "a", "s", "p", "o", "i", "u", "y", "t", "r", "e", "w", "q", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "è", "é", "ê", "ë", "ē", "ė", "ę", "ÿ", "û", "ü"]
+            let decode_codes=["ù","ú","ū",'î','ï','í','į','ì','ž']
+            decode_characters.forEach(function(character,index){
+                if(code.split(character).length==2){
+                    let decode_block_id=code.split(character)[1].split('')[0];
+                    console.log(decode_block_id)
+                    decode_codes.forEach(function(character_code,index_code){
+                        if(character_code==decode_block_id){
+                            if(character_code=='î'){
+                                player_location=index
+                                set_block(index,1)
+                                set_player()
+                            }else{set_block(index,index_code)}
+                        }
+                    })
+                }
+            })
+        }
+        decode(decodeURI("źž^ú=î+ū|ū]ū}ū[ì{ū%27ï"))
+    </script>
+</body>
+</html>

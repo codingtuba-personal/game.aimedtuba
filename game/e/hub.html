@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        .create{
+            background-color: white;
+            border:2.5px solid black;
+            height:25px;
+            width:96vw;
+            cursor: pointer;
+        }
+        .project{
+            background-color: white;
+            border:2.5px solid black;
+            height:49vw;
+            width:49vw;
+            max-width:50vh;
+            max-height:50vh;
+            margin-top:5px;
+            margin-left: 1px;
+        }
+        .show{
+            height:40vw;
+            width:40vw;
+            max-width:43vh;
+            max-height:43vh;
+            margin: 0 auto;
+            border:none;
+        }
+        .edit,.delete{
+            background-color: white;
+            height:15px;
+            font-size:7px;
+            max-width:45vh;
+            width:40vw;
+            margin-top:1px;
+            cursor: pointer;
+        }
+        .delete{
+            color:red;
+            border:2.5px solid red;
+        }
+        .edit{border:2.5px solid black;}
+    </style>
+</head>
+<body>
+    <button class="create" onclick="create()">new project</button><a href="/" class="back"> 🔙</a>
+    <div class="projects">
+
+    </div>
+    <script>
+        if(!getCookie('edit')){setCookie('edit',"",99999)}
+        // setCookie('edit',"",99999)
+        console.log(getCookie('edit'))
+        decodeURI(getCookie("edit")).replaceAll("°",";").replaceAll("••","\\").split("ł").forEach((i,d)=>{
+            let e = document.createElement('button')
+            e.className = 'project'
+            e.innerHTML = `
+                <iframe src="/see?c=${i}" class="show"></iframe><br>
+                <button class="delete" onclick="del(${d})">delete</button>
+                <button class="edit" onclick="go(${"`"}${i.replaceAll("\\","\\\\")}${"`"},${d})">edit</button>
+            `
+            document.querySelector('.projects').appendChild(e)
+        })
+        function go(i,d){
+            setCookie('editing',d,99999)
+            location.replace(`/edit?c=${i}`)
+        }
+        function del(d){
+            let x = decodeURI(getCookie("edit")).replaceAll("°",";").replaceAll("••","\\").split("ł")
+            x.splice(d,1)
+            let s=""
+            x.forEach((i,d)=>{s+=i+(d!=x.length-1?"ł":"")})
+            setCookie('edit',encodeURI(s.replaceAll(";","°").replaceAll("\\","•")),99999)
+            location.reload()
+        }
+        function create(){
+            setCookie('edit',encodeURI(decodeURI(getCookie('edit'))+"ł"),99999)
+            location.reload()
+        }
+        // https://drive.google.com/file/d/1nJgYH-kBGwV9JtbIgaAh2DB0mVPKefmi/view?usp=sharing
+        function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}
+    </script>
+</body>
+</html>

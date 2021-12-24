@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        body{
+            text-align:center;
+        }
+        .button{
+            width:320px;
+            height:fit-content;
+            background-color:white;
+            border:1px solid black;
+            margin-top:5px;
+        }
+        a.button{
+            border:none;
+        }
+    </style>
+</head>
+<body>
+        <button class='button'>Waiting...... (<a class='left'>0</a> seconds)</button><br>
+        <button class='button tip'></button><br><br>
+        <button class='button name'></button><br>
+        <script>
+            document.querySelector('.name').innerHTML=new URLSearchParams(location.search).get('n');
+            let tips=['Some portals are traps!','Remember to cout the number of keys!',"Tip : You don't need to unlock all of the locks!","Remeber : <b>always</b> look ahead!","Some keys are traps!","You loose some, and you win some.","You should do some single player pratice.","Have some fun!","Remember : Not all levels are easy!","Tip : take it <b>one step at a time!</b>","Reminder : If you're having trouble, remember that you could get a level made by a 6 year old!"]
+            document.getElementsByClassName('tip')[0].innerHTML=tips[Math.floor(Math.random() * tips.length)]
+            let time_left=4
+            setInterval(function(){
+                time_left--
+                document.getElementsByClassName('left')[0].innerHTML=time_left;
+                if(time_left==0){
+                    location.reload()
+                }
+            },1000)
+        </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        body{
+            text-align: center;
+        }
+        button{
+            margin-top: 5px;
+            border:2.5px solid black;
+            width:320px;
+            height:fit-content;
+            background-color:transparent;
+        }
+        a{margin-top:5px;}
+    </style>
+</head>
+<body>
+    <button onclick='single()'>Single player</button><br>
+    <button onclick='location.replace("/r")'>Random level</button><br>
+    <button onclick='location="/select"'>Select Level</button><br>
+    <button onclick='location="/e"'>Editor</button><br>
+    <button onclick='location="/s/s?s="'>Shop</button><br>
+    <button onclick='location="/g/c"' id='multi'>Multiplayer</button>
+    <br>
+    <a>Score: <a class="score"></a></a>
+    <script>
+        if(!getCookie('score')){setCookie('score',0,99999);location.replace('/t/1')}
+        if(parseInt(getCookie('score'))>10000){setCookie('score',0,99999);location.replace('/t/1')}
+        if(isNaN(getCookie('score'))){setCookie('score',1,99999)}
+        if(parseInt(getCookie('score'))<0){document.getElementById('multi').innerHTML='Tutorial';document.getElementById('multi').onclick=function(){location.replace('/t/1')}}
+        setCookie('time',0,-1)
+        document.getElementsByClassName('score')[0].innerHTML = getCookie('score')
+        function single() {
+            var xhr = new window.XMLHttpRequest()
+            xhr.open('POST', '/s', true)
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+            xhr.send(JSON.stringify({}))
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200 || this.status == 302) {
+                    let info=JSON.parse(xhr.responseText)
+                    setCookie('time',info.time,99999)
+                    location.replace(`/s?c=${info.course}`)
+                }
+            };
+        }
+        function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        body{
+            text-align: center;
+        }
+        button{
+            margin-top: 5px;
+            border:2.5px solid black;
+            width:320px;
+            height:fit-content;
+            background-color:transparent;
+        }
+        a{margin-top:5px;}
+    </style>
+</head>
+<body>
+    <button onclick='select()'>Select Game</button><br>
+    <button onclick='create()'>Create Game</button><br>
+    <script>
+        function create() {
+            var xhr=new XMLHttpRequest();
+            xhr.open("POST","/g/m",true);
+            xhr.onreadystatechange=function(){
+                if(xhr.status==200||xhr.status==302){
+                    location.replace(xhr.responseText)
+                }
+            }
+            xhr.send();
+        }
+        function select() {
+            var xhr=new XMLHttpRequest();
+            xhr.open("GET","/g/l",true);
+            xhr.onreadystatechange=function(){
+                if(xhr.status==200||xhr.status==302){
+                    document.querySelectorAll("button").forEach(function(e){e.remove()})
+                    document.querySelectorAll("br").forEach(function(e){e.remove()})
+                    var games=JSON.parse(xhr.responseText);
+                    games.forEach(function(it,id){
+                        if(it.playing==false){
+                            document.body.innerHTML += `
+                                <button onclick="join(${id})">${it.name}</button><br>
+                            `
+                        }
+                    })
+                }
+            }
+            xhr.send();
+        }
+        function join(id) {
+            var xhr=new XMLHttpRequest();
+            xhr.open("POST","/g/j?id="+id,true);
+            xhr.onreadystatechange=function(){
+                if(xhr.status==200||xhr.status==302){
+                    location.replace(xhr.responseText)
+                }
+            }
+            xhr.send();
+        }
+    </script>
+    <script src="https://api.ipify.org?format=jsonp&amp;callback=getIP"></script>
+</body>
+</html>

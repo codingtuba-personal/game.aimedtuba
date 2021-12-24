@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game.aimedtuba.com</title>
+    <link href="https://aimedtubaimages.cadd27.repl.co/logo.png" rel="icon" type="image/png">
+    <style>
+        .button{
+            width:9vw;
+            height: 9vw;
+            background-color: aqua;
+            border:none;
+            background-size: cover;
+            background-repeat: no-repeat;
+            transform:rotateY(180deg);
+            outline: none;
+        }
+        .container-row{
+            width:90vw;
+            height:9vw;
+        }
+        .master-container{
+            border:2.5px solid black;
+            width:90vw;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <div class="master-container">
+        <div class="container-row top"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+        <div class="container-row bottom"><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><button class="button"></button><br></div>
+    </div>
+    <script>
+        const n = null
+        let colors=['aqua','#7CFC00','#7B3F00','#7CFC00','#228B22','pink','purple','#7CFC00','#7CFC00','#7CFC00','#7CFC00']
+        let images=['none','none','none','url(https://i.ibb.co/JRq8SRY/person-removebg-preview-1.png)','none','none','none','url("https://securitystbk.com/wp-content/uploads/2018/11/Padlock-PNG-Transparent-Image.png")','url("https://upload.wikimedia.org/wikipedia/commons/5/58/Key_Vector_Graphic.svg")','url("https://i.imgur.com/SYEdzBD.png")','url("https://i.ibb.co/DLWd56V/image-removebg-preview-1.png")']
+        if(getCookie("texture")){images=JSON.parse(getCookie("texture"))}
+        if(getCookie("color")){colors=JSON.parse(getCookie("color"))}
+        let decoded=new URLSearchParams(window.location.search)
+        if(decoded.get('colors')){colors=JSON.parse(decoded.get('colors').replaceAll('"','"#').replaceAll('"#,"#','","#').replace('"#]','"]'))}
+        if(decoded.get('images')){images=JSON.parse(decoded.get('images'))}
+        document.querySelectorAll(".button").forEach(e=>{e.style.backgroundColor=colors[0]})
+        document.querySelectorAll(".button").forEach(e=>{e.style.backgroundImage=images[0]})
+        document.querySelector(".master-container").style.backgroundColor=colors[0]
+        function searchToObject(search) {
+            return search.substring(1).split("&").reduce(function(result, value) {
+                var parts = value.split('=');
+                if (parts[0]) result[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+                return result;
+            }, {})
+        }
+        let player_location=1
+        let blocks=[]
+        let player_direction='none'
+        let current_level=0
+        let keys=0
+        for(i of Array(100).keys()){
+            blocks.push(0)
+        }
+        function set_player(){
+            document.getElementsByClassName('button')[player_location].style.backgroundImage=images[3]
+        }
+        function set_block(block,block_id){
+            blocks[block]=block_id
+            document.getElementsByClassName('button')[block].style.backgroundColor=colors[block_id]
+            document.getElementsByClassName('button')[block].style.backgroundImage=images[block_id]
+        }
+        function decode(code){
+            let decode_characters=["1", "2", "3", "4", "5", "6", "7", "8", "9", "!", "@", "ć", "$", "ź", "^", "ż", "*", "(", ")", "-", "_", "=", "+", "|", "]", "}", "[", "{", "'", "\\", ";", ":", "č", "ç", ".", ">", ",", "<", "m", "n", "b", "v", "c", "x", "z", "l", "k", "j", "h", "g", "f", "d", "a", "s", "p", "o", "i", "u", "y", "t", "r", "e", "w", "q", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Z", "X", "C", "V", "B", "N", "M", "è", "é", "ê", "ë", "ē", "ė", "ę", "ÿ", "û", "ü"]
+            let decode_codes=["ù","ú","ū",'î','ï','í','į','ì','ž','œ','ø']
+            decode_characters.forEach(function(character,index){
+                if(code.split(character).length==2){
+                    let decode_block_id=code.split(character)[1].split('')[0];
+                    decode_codes.forEach(function(character_code,index_code){
+                        if(character_code==decode_block_id){
+                            if(character_code=='î'){
+                                player_location=index
+                                set_block(index,1)
+                                set_player()
+                            }else{set_block(index,index_code)}
+                        }
+                    })
+                }
+            })
+        }
+        decode(decodeURI(location.search.split('&')[0].replace("?c=","")))
+        function setCookie(cname,cvalue,exdays) {  var d = new Date();  d.setTime(d.getTime() + (exdays*24*60*60*1000));  var expires = 'expires=' + d.toGMTString();  document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';}function getCookie(cname) {  var name = cname + '=';  var decodedCookie = decodeURIComponent(document.cookie);  var ca = decodedCookie.split(';');  for(var i = 0; i < ca.length; i++) {    var c = ca[i];    while (c.charAt(0) == ' ') {      c = c.substring(1);    }    if (c.indexOf(name) == 0) {      return c.substring(name.length, c.length);    }  }  return '';}
+    </script>
+</body>
+</html>
