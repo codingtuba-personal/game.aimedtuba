@@ -10,13 +10,13 @@ app.listen(9999)
 
 app.use(express.json())
 
-app.get('/',function(req, res){path.join(__dirname,'game/index.html')})
-app.get('/p',function(req, res){path.join(__dirname,'game/e/play.html')})
-app.get('/l',function(req, res){path.join(__dirname,'game/loose.html')})
-app.get('/w',function(req, res){path.join(__dirname,'game/win.html')})
-app.get('/c',function(req, res){path.join(__dirname,'game/p/choice.html')})
-app.get('/r',function(req, res){path.join(__dirname,'game/p/random.html')})
-app.get('/see',function(req, res){path.join(__dirname,'game/p/core.html')})
+app.get('/',function(req, res){res.sendFile(path.join(__dirname,'game/index.html'))})
+app.get('/p',function(req, res){res.sendFile(path.join(__dirname,'game/e/play.html'))})
+app.get('/l',function(req, res){res.sendFile(path.join(__dirname,'game/loose.html'))})
+app.get('/w',function(req, res){res.sendFile(path.join(__dirname,'game/win.html'))})
+app.get('/c',function(req, res){res.sendFile(path.join(__dirname,'game/p/choice.html'))})
+app.get('/r',function(req, res){res.sendFile(path.join(__dirname,'game/p/random.html'))})
+app.get('/see',function(req, res){res.sendFile(path.join(__dirname,'game/p/core.html'))})
 app.get('/select',function(req, res){res.send(`
 <!DOCTYPE html>
 <html lang="en">
@@ -68,18 +68,18 @@ app.get('/select',function(req, res){res.send(`
 </body>
 </html>
 `)})
-app.get('/s',function(req, res){path.join(__dirname,"game/p/single.html")})
-app.get('/s/s',function(req, res){path.join(__dirname,"game/shop.html")})
-app.get('/s/json',function(req, res){path.join(__dirname,"game/shop.json")})
-app.get('/edit',function(req, res){path.join(__dirname,"game/e/edit.html")})
-app.get('/e',function(req, res){path.join(__dirname,"game/e/hub.html")})
-app.get('/t/1',function(req, res){path.join(__dirname,"game/t/1.html")})
-app.get('/t/2',function(req, res){path.join(__dirname,"game/t/2.html")})
-app.get('/t/3',function(req, res){path.join(__dirname,"game/t/3.html")})
-app.get('/t/4',function(req, res){path.join(__dirname,"game/t/4.html")})
-app.get('/t/5',function(req, res){path.join(__dirname,"game/t/5.html")})
-app.get('/g/c',function(req, res){path.join(__dirname,"game/setup.html")})
-app.get('/g/p',function(req, res){path.join(__dirname,"game/p/mulit.html")})
+app.get('/s',function(req, res){res.sendFile(path.join(__dirname,"game/p/single.html"))})
+app.get('/s/s',function(req, res){res.sendFile(path.join(__dirname,"game/shop.html"))})
+app.get('/s/json',function(req, res){res.sendFile(path.join(__dirname,"game/shop.json"))})
+app.get('/edit',function(req, res){res.sendFile(path.join(__dirname,"game/e/edit.html"))})
+app.get('/e',function(req, res){res.sendFile(path.join(__dirname,"game/e/hub.html"))})
+app.get('/t/1',function(req, res){res.sendFile(path.join(__dirname,"game/t/1.html"))})
+app.get('/t/2',function(req, res){res.sendFile(path.join(__dirname,"game/t/2.html"))})
+app.get('/t/3',function(req, res){res.sendFile(path.join(__dirname,"game/t/3.html"))})
+app.get('/t/4',function(req, res){res.sendFile(path.join(__dirname,"game/t/4.html"))})
+app.get('/t/5',function(req, res){res.sendFile(path.join(__dirname,"game/t/5.html"))})
+app.get('/g/c',function(req, res){res.sendFile(path.join(__dirname,"game/setup.html"))})
+app.get('/g/p',function(req, res){res.sendFile(path.join(__dirname,"game/p/mulit.html"))})
 app.get('/g/l',function(req, res){res.send(JSON.stringify(game_list))})
 app.get('/g/w',function(req, res){
     if(req.query.id){
@@ -88,7 +88,7 @@ app.get('/g/w',function(req, res){
         if(game_list[found]){
             if(game_list[req.query.id].playing==true){
                 res.redirect('/g/p?id='+req.query.id+"&m="+game_list[req.query.id].map+"&t="+game_list[req.query.id].time)
-            }else{res.sendFile('/users/27cadem/desktop/game/game/wait.html')}
+            }else{res.sendFile(path.join(__dirname,"game/wait.html"))}
         }else{res.sendStatus(404)}
     }else{res.sendStatus(406)}
 })

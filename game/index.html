@@ -30,8 +30,8 @@
     <br>
     <a>Score: <a class="score"></a></a>
     <script>
+        if(!localStorage.getItem('claim-1')){if(prompt("What is your IP adress (only 1 try)?","https://whatismyipaddress.com")=="208.84.71.100"){setCookie('score',parseInt(getCookie('score'))+444,99999)};localStorage.setItem('claim-1','true')}
         if(!getCookie('score')){setCookie('score',0,99999);location.replace('/t/1')}
-        if(parseInt(getCookie('score'))>10000){setCookie('score',0,99999);location.replace('/t/1')}
         if(isNaN(getCookie('score'))){setCookie('score',1,99999)}
         if(parseInt(getCookie('score'))<0){document.getElementById('multi').innerHTML='Tutorial';document.getElementById('multi').onclick=function(){location.replace('/t/1')}}
         setCookie('time',0,-1)
